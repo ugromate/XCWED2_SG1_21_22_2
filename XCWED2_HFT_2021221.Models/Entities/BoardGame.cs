@@ -22,11 +22,9 @@ namespace XCWED2_HFT_2021221.Models.Entities
 
         public int MinAge { get; set; }
 
+        public double Rating { get; set; }
 
-        [MaxLength(25)]
-        public string Artist { get; set; }
-
-        public int Rating { get; set; }
+        public int PriceHUF { get; set; }
 
         [Required]
         public int DesignerID { get; set; }
