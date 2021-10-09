@@ -15,22 +15,29 @@ namespace XCWED2_HFT_2021221.Models.Entities
         [MaxLength(25)]
         public string Name { get; set; }
 
+
         public int MinPlayer { get; set; }
 
         public int MaxPlayer { get; set; }
 
         public int MinAge { get; set; }
 
-        public string Designer { get; set; }
 
+        [MaxLength(25)]
         public string Artist { get; set; }
 
         public int Rating { get; set; }
 
-        public int RentPrice { get; set; }
+        [Required]
+        public int DesignerID { get; set; }
 
         [NotMapped]
-        public virtual ICollection<Publisher> Publishers { get; set; }
+        public virtual Designer Designer { get; set; }
+
+        [Required]
+        public int PublisherID { get; set; }
+        [NotMapped]
+        public virtual Publisher Publisher { get; set; }
 
     }
 }
