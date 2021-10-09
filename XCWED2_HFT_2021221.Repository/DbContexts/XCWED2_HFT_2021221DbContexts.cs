@@ -11,6 +11,11 @@ namespace XCWED2_HFT_2021221.Repository.DbContexts
 
         public virtual DbSet<Designer> Designers { get; set; }
 
+        public XCWED2_HFT_2021221DbContexts()
+        {
+            Database.EnsureCreated();
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
