@@ -11,7 +11,7 @@ namespace XCWED2_HFT_2021221.Repository.Repositories
 {
     public class BoardGameRepository : RepositoryBase<BoardGame, int>, IBoardGameRepository
     {
-        public BoardGameRepository(XCWED2_HFT_2021221DbContexts context) : base(context)
+        public BoardGameRepository(XCWED2_HFT_2021221DbContext context) : base(context)
         {
         }
 

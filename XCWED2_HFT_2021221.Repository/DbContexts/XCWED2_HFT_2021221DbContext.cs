@@ -3,7 +3,7 @@ using XCWED2_HFT_2021221.Models.Entities;
 
 namespace XCWED2_HFT_2021221.Repository.DbContexts
 {
-    public class XCWED2_HFT_2021221DbContexts : DbContext
+    public class XCWED2_HFT_2021221DbContext : DbContext
     {
         public virtual DbSet<Publisher> Publishers { get; set; }
 
@@ -11,7 +11,7 @@ namespace XCWED2_HFT_2021221.Repository.DbContexts
 
         public virtual DbSet<Designer> Designers { get; set; }
 
-        public XCWED2_HFT_2021221DbContexts()
+        public XCWED2_HFT_2021221DbContext()
         {
             Database.EnsureCreated();
         }

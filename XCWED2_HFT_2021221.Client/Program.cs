@@ -8,7 +8,7 @@ namespace XCWED2_HFT_2021221.Client
         static void Main(string[] args)
         {
             Console.WriteLine("Started");
-            var context = new XCWED2_HFT_2021221DbContexts();
+            var context = new XCWED2_HFT_2021221DbContext();
             Console.WriteLine("Connected");
 
 

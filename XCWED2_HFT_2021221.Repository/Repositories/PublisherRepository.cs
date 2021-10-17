@@ -7,7 +7,7 @@ namespace XCWED2_HFT_2021221.Repository.Repositories
 {
     public class PublisherRepository : RepositoryBase<Publisher, int>, IPublisherRepository
     {
-        public PublisherRepository(XCWED2_HFT_2021221DbContexts context) : base(context)
+        public PublisherRepository(XCWED2_HFT_2021221DbContext context) : base(context)
         {
         }
 

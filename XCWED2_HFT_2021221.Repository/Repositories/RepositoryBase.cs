@@ -10,9 +10,9 @@ namespace XCWED2_HFT_2021221.Repository.Repositories
 {
     public abstract class RepositoryBase<TEntity, TKey> : IRepositoryBase<TEntity, TKey> where TEntity : class
     {
-        protected XCWED2_HFT_2021221DbContexts Context;
+        protected XCWED2_HFT_2021221DbContext Context;
 
-        protected RepositoryBase(XCWED2_HFT_2021221DbContexts context)
+        protected RepositoryBase(XCWED2_HFT_2021221DbContext context)
         {
             Context = context;
         }
