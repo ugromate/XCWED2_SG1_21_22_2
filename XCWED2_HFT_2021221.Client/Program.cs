@@ -25,6 +25,7 @@ namespace XCWED2_HFT_2021221.Client
             }
 
             Console.ReadLine();
+
         }
     }
 }
