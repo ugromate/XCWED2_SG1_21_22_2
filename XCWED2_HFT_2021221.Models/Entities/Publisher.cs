@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace XCWED2_HFT_2021221.Models.Entities
 {
@@ -19,6 +20,7 @@ namespace XCWED2_HFT_2021221.Models.Entities
         [MaxLength(25)]
         public string Country { get; set; }
 
+        [JsonIgnore]
         [NotMapped]
         public virtual ICollection<BoardGame> BoardGames { get; set; }
     }

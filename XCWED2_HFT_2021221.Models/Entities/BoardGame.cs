@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace XCWED2_HFT_2021221.Models.Entities
 {
@@ -29,11 +30,14 @@ namespace XCWED2_HFT_2021221.Models.Entities
         [Required]
         public int DesignerID { get; set; }
 
+        [JsonIgnore]
         [NotMapped]
         public virtual Designer Designer { get; set; }
 
         [Required]
         public int PublisherID { get; set; }
+
+        [JsonIgnore]
         [NotMapped]
         public virtual Publisher Publisher { get; set; }
 
