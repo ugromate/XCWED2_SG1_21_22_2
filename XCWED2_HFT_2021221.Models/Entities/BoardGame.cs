@@ -30,16 +30,22 @@ namespace XCWED2_HFT_2021221.Models.Entities
         [Required]
         public int DesignerID { get; set; }
 
-        [JsonIgnore]
+        
         [NotMapped]
         public virtual Designer Designer { get; set; }
 
         [Required]
         public int PublisherID { get; set; }
 
-        [JsonIgnore]
+
         [NotMapped]
         public virtual Publisher Publisher { get; set; }
+
+
+        public override string ToString()
+        {
+            return $"Name: {Name}\nPublisher: {Publisher.Name}\nDesigner: {Designer.Name}\n";
+        }
 
     }
 }
