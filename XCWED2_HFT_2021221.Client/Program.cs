@@ -15,6 +15,7 @@ namespace XCWED2_HFT_2021221.Client
         {
             Console.WriteLine("Waiting for server");
             Console.ReadLine();
+            #region old
 
             var jsonOption = new JsonSerializerOptions(JsonSerializerDefaults.Web);
 
@@ -29,20 +30,13 @@ namespace XCWED2_HFT_2021221.Client
 
                 //write out boardgames
 
-                var response = client.GetAsync("BoardGame").GetAwaiter().GetResult();
-                Console.WriteLine(response);
-
-                var stringResult = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-
-                var boardGames = JsonSerializer.Deserialize<List<BoardGame>>(stringResult, jsonOption);
-
-                DisplayBoardGames(boardGames);
+                WriteOutBoardGames(client, jsonOption);
 
                 // write out designers
 
-                response = client.GetAsync("Designer").GetAwaiter().GetResult();
+                var response = client.GetAsync("Designer").GetAwaiter().GetResult();
 
-                stringResult = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                var stringResult = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
                 var designer = JsonSerializer.Deserialize<List<Designer>>(stringResult, jsonOption);
 
@@ -63,7 +57,7 @@ namespace XCWED2_HFT_2021221.Client
                     PriceHUF = 11000
                 };
 
-               var postResponse =  client.PostAsJsonAsync<BoardGame>("BoardGame", newboardGame).GetAwaiter().GetResult();
+                var postResponse = client.PostAsJsonAsync<BoardGame>("BoardGame", newboardGame).GetAwaiter().GetResult();
 
                 var apiResult = JsonSerializer.Deserialize<ApiResult>(postResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult(), jsonOption);
 
@@ -72,10 +66,40 @@ namespace XCWED2_HFT_2021221.Client
                     Console.WriteLine("Creation was successfull");
                 }
 
+                WriteOutBoardGames(client, jsonOption);
+
+                //Delete
+
+                //GetPublisher averages
+                var publisherAverages = client; 
+
             }
 
             Console.ReadLine();
+            #endregion
 
+            #region httpService
+            //var httpSevice = new HttpService("BoardGame", "http://localhost:48914/api/");
+
+            ////GetAll
+            //var boardGames = httpSevice.GetAll<BoardGame>();
+            //DisplayBoardGames(boardGames);
+
+            //Console.ReadLine();
+            #endregion
+
+        }
+
+        private static void WriteOutBoardGames(HttpClient client, JsonSerializerOptions jsonOption)
+        {
+            var response = client.GetAsync("BoardGame").GetAwaiter().GetResult();
+            Console.WriteLine(response);
+
+            var stringResult = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+            var boardGames = JsonSerializer.Deserialize<List<BoardGame>>(stringResult, jsonOption);
+
+            DisplayBoardGames(boardGames);
         }
 
         private static void DisplayBoardGames(List<BoardGame> boardGames)

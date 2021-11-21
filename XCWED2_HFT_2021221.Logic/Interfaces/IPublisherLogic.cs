@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using XCWED2_HFT_2021221.Logic.Models;
 using XCWED2_HFT_2021221.Models.Entities;
+using XCWED2_HFT_2021221.Models.Models;
 
 namespace XCWED2_HFT_2021221.Logic.Interfaces
 {
@@ -20,6 +21,6 @@ namespace XCWED2_HFT_2021221.Logic.Interfaces
 
         void Delete(int id);
 
-        IEnumerable<AverageModel> GetPublisherAverages();
+        IEnumerable<AveragePublisher> GetPublisherAverages();
     }
 }

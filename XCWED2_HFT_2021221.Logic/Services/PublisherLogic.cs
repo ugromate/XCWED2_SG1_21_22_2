@@ -7,6 +7,7 @@ using XCWED2_HFT_2021221.Logic.Interfaces;
 using XCWED2_HFT_2021221.Logic.Models;
 using XCWED2_HFT_2021221.Models.Entities;
 using XCWED2_HFT_2021221.Repository.Interfaces;
+using XCWED2_HFT_2021221.Models.Models;
 
 namespace XCWED2_HFT_2021221.Logic.Services
 {
@@ -68,10 +69,10 @@ namespace XCWED2_HFT_2021221.Logic.Services
             _publisherRepository.Delete(id);
         }
 
-        public IEnumerable<AverageModel> GetPublisherAverages()
+        public IEnumerable<AveragePublisher> GetPublisherAverages()
         {
             var averages = from boardgame in _boardGameRepository.ReadAll()
-                           group boardgame by boardgame.Id into grouped
+                           group boardgame by boardgame.PublisherID into grouped
                            select new
                            {
                                PublisherId = grouped.Key,
@@ -81,13 +82,40 @@ namespace XCWED2_HFT_2021221.Logic.Services
             var result = from publisher in _publisherRepository.ReadAll()
                          join average in averages
                          on publisher.Id equals average.PublisherId
-                         select new AverageModel()
+                         select new AveragePublisher()
                          {
                              PublisherName = publisher.Name,
                              Average = average.Average
                          };
 
             return result.ToList();
+        }
+
+        public int TwoKidGameCount()
+        {
+            var games = from boardgame in _boardGameRepository.ReadAll()
+                           where boardgame.MinAge < 11 && boardgame.MinPlayer == 2
+                           select new
+                           {
+                               Name = boardgame.Name
+                           };
+           return games.Count();
+        }
+
+        public void BestAlonePlayable()
+        {
+            var games = from boardgame in _boardGameRepository.ReadAll()
+                        where boardgame.MinPlayer == 1
+                        select new
+                        {
+                            Name = boardgame.Name,
+                            Rating = boardgame.Rating,
+                        };
+
+            var ordered = games.OrderByDescending(x => x.Rating);
+
+            Console.WriteLine("Best game what can be played alone also:");
+            Console.WriteLine(ordered.FirstOrDefault().Name);
         }
     }
 }
