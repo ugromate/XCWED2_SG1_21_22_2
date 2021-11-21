@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using XCWED2_HFT_2021221.Logic.Interfaces;
-using XCWED2_HFT_2021221.Logic.Models;
 using XCWED2_HFT_2021221.Models.Entities;
 using XCWED2_HFT_2021221.Repository.Interfaces;
 
@@ -24,7 +24,10 @@ namespace XCWED2_HFT_2021221.Logic.Services
         {
             // TODO check access
 
-            // TODO: validate !!! 
+            if (entity == null)
+            {
+                throw new Exception();
+            }
 
             var result = _boardGameRepository.Create(entity);
 

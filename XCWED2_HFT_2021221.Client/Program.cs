@@ -79,13 +79,13 @@ namespace XCWED2_HFT_2021221.Client
             #endregion
 
             #region httpService
-            //var httpSevice = new HttpService("BoardGame", "http://localhost:48914/api/");
+            var httpSevice = new HttpService("BoardGame", "http://localhost:48914/api/");
 
-            ////GetAll
-            //var boardGames = httpSevice.GetAll<BoardGame>();
-            //DisplayBoardGames(boardGames);
+            //GetAll
+            var boardGames = httpSevice.GetAll<BoardGame>();
+            DisplayBoardGames(boardGames);
 
-            //Console.ReadLine();
+            Console.ReadLine();
             #endregion
 
         }

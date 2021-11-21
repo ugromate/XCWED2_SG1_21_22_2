@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XCWED2_HFT_2021221.Logic.Interfaces;
-using XCWED2_HFT_2021221.Logic.Models;
 using XCWED2_HFT_2021221.Models.Entities;
 using XCWED2_HFT_2021221.Repository.Interfaces;
 using XCWED2_HFT_2021221.Models.Models;
 
 namespace XCWED2_HFT_2021221.Logic.Services
 {
-    class PublisherLogic : IPublisherLogic
+  public  class PublisherLogic : IPublisherLogic
     {
         IBoardGameRepository _boardGameRepository;
         IPublisherRepository _publisherRepository;
@@ -28,7 +27,10 @@ namespace XCWED2_HFT_2021221.Logic.Services
         {
             // TODO check access
 
-            // TODO: validate !!! 
+            if (entity == null)
+            {
+                throw new Exception();
+            } 
 
             var result = _publisherRepository.Create(entity);
 

@@ -27,7 +27,11 @@ namespace XCWED2_HFT_2021221.Logic.Services
         {
             // TODO check access
 
-            // TODO: validate !!! 
+
+            if (entity == null)
+            {
+                throw new Exception();
+            }
 
             var result = _designerRepository.Create(entity);
 
@@ -89,7 +93,14 @@ namespace XCWED2_HFT_2021221.Logic.Services
             var designerList = result.OrderByDescending(x => x.AverageRating);
             var mostpopularDesigner = designerList.FirstOrDefault();
 
+            if (mostpopularDesigner == null)
+            {
+                return null;
+            }
+            else
+            {
             return mostpopularDesigner.ToString();
+            }
         }
 
         public void GamesByNationality()
