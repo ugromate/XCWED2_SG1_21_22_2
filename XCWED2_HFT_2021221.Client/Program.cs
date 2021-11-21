@@ -27,6 +27,8 @@ namespace XCWED2_HFT_2021221.Client
             {
                 client.BaseAddress = new Uri("http://localhost:48914/api/");
 
+                //write out boardgames
+
                 var response = client.GetAsync("BoardGame").GetAwaiter().GetResult();
                 Console.WriteLine(response);
 
@@ -35,6 +37,17 @@ namespace XCWED2_HFT_2021221.Client
                 var boardGames = JsonSerializer.Deserialize<List<BoardGame>>(stringResult, jsonOption);
 
                 DisplayBoardGames(boardGames);
+
+                // write out designers
+
+                response = client.GetAsync("Designer").GetAwaiter().GetResult();
+
+                stringResult = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                var designer = JsonSerializer.Deserialize<List<Designer>>(stringResult, jsonOption);
+
+                DisplayDesigner(designer);
+
 
                 //Create
 
@@ -70,6 +83,14 @@ namespace XCWED2_HFT_2021221.Client
             foreach (var boardGame in boardGames)
             {
                 Console.WriteLine(boardGame.ToString());
+            }
+        }
+
+        private static void DisplayDesigner(List<Designer> designers)
+        {
+            foreach (var designer in designers)
+            {
+                Console.WriteLine(designer.ToString());
             }
         }
     }

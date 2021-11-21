@@ -18,6 +18,7 @@ namespace XCWED2_HFT_2021221.Logic.Infrastructure
 
             services.AddScoped<IBoardGameLogic, BoardGameLogic>();
             services.AddScoped<IPublisherLogic, PublisherLogic>();
+            services.AddScoped<IDesignerLogic, DesignerLogic>(); 
         }
     }
 }

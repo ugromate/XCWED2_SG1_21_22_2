@@ -23,5 +23,11 @@ namespace XCWED2_HFT_2021221.Models.Entities
         [JsonIgnore]
         [NotMapped]
         public virtual ICollection<BoardGame> BoardGames { get; set; }
+
+        public override string ToString()
+        {
+            return $"Name: {Name}\nCountry: {Country}\n";
+        }
+
     }
 }
