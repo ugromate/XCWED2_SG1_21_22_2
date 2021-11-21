@@ -98,17 +98,18 @@ namespace XCWED2_HFT_2021221.Logic.Services
                         group boardgame by boardgame.DesignerID into grouped
                         select new
                         {
-                            DesignerID = grouped.Key
+                            DesignerID = grouped.Key,
+                            Count = grouped.Count()
                         };
 
             var countryList = from designer in _designerRepository.ReadAll()
                               join game in games
                               on designer.Id equals game.DesignerID
-                              select new()
+                              select new
                               {
                                   Nationality = designer.Nationality,
-                                  Count = game.DesignerID.Count()
-                         };
+                                  Count = game.Count
+                              };
 
             var list = countryList.ToList();
 
