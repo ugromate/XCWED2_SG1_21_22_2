@@ -334,5 +334,55 @@ namespace XCWED2_HFT_2021221.Test
             Assert.That(gameCount, Is.EqualTo(2));
         }
 
+        [Test]
+        public void BestOnePlayerGameNoGames()
+        {
+            //Assert
+            List<BoardGame> boardGames = new List<BoardGame>() {
+        new BoardGame() { Id = 1, Name = "Pandemic", DesignerID = 1, PublisherID = 1, MinPlayer = 2, MaxPlayer = 4, MinAge = 8, Rating = 7.6, PriceHUF = 10000 },
+        new BoardGame() { Id = 2, Name = "Carcassone", DesignerID = 1, PublisherID = 1, MinPlayer = 2, MaxPlayer = 5, MinAge = 8, Rating = 7.4, PriceHUF = 7300 },
+        new BoardGame() { Id = 8, Name = "Settlers of Catan", DesignerID = 2, PublisherID = 2, MinPlayer = 3, MaxPlayer = 4, MinAge = 10, Rating = 7.1, PriceHUF = 9000 },
+        new BoardGame() { Id = 9, Name = "Anno 1503", DesignerID = 2, PublisherID = 2, MinPlayer = 3, MaxPlayer = 4, MinAge = 10, Rating = 6.2, PriceHUF = 10000 }
+            };
+
+            var boardGameRepo = new Mock<IBoardGameRepository>();
+            var publisherRepo = new Mock<IPublisherRepository>();
+            var designerRepo = new Mock<IDesignerRepository>();
+            var logic = new PublisherLogic(boardGameRepo.Object, publisherRepo.Object, designerRepo.Object);
+
+            boardGameRepo.Setup(x => x.ReadAll()).Returns(boardGames.AsQueryable());
+
+            //Act
+            var exception = Assert.Throws(typeof(NullReferenceException), () => logic.BestAlonePlayable());
+
+            // Assert
+            Assert.That(exception, Is.Not.Null);
+        }
+
+        [Test]
+        public void BestOnePlayerGameManyGames()
+        {
+            //Assert
+            List<BoardGame> boardGames = new List<BoardGame>() {
+        new BoardGame() { Id = 1, Name = "Pandemic", DesignerID = 1, PublisherID = 1, MinPlayer = 1, MaxPlayer = 4, MinAge = 8, Rating = 7.6, PriceHUF = 10000 },
+        new BoardGame() { Id = 2, Name = "Carcassone", DesignerID = 1, PublisherID = 1, MinPlayer = 1, MaxPlayer = 5, MinAge = 8, Rating = 7.4, PriceHUF = 7300 },
+        new BoardGame() { Id = 8, Name = "Settlers of Catan", DesignerID = 2, PublisherID = 2, MinPlayer = 3, MaxPlayer = 4, MinAge = 10, Rating = 7.1, PriceHUF = 9000 },
+        new BoardGame() { Id = 9, Name = "Anno 1503", DesignerID = 2, PublisherID = 2, MinPlayer = 3, MaxPlayer = 4, MinAge = 10, Rating = 6.2, PriceHUF = 10000 }
+            };
+
+            var boardGameRepo = new Mock<IBoardGameRepository>();
+            var publisherRepo = new Mock<IPublisherRepository>();
+            var designerRepo = new Mock<IDesignerRepository>();
+            var logic = new PublisherLogic(boardGameRepo.Object, publisherRepo.Object, designerRepo.Object);
+
+            boardGameRepo.Setup(x => x.ReadAll()).Returns(boardGames.AsQueryable());
+
+            //Act
+            string result = logic.BestAlonePlayable();
+
+            //Assert
+            Assert.That(result, Is.EqualTo("Pandemic"));
+        }
+
     }
 }

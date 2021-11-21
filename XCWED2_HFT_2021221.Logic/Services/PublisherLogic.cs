@@ -104,7 +104,7 @@ namespace XCWED2_HFT_2021221.Logic.Services
            return games.Count();
         }
 
-        public void BestAlonePlayable()
+        public string BestAlonePlayable()
         {
             var games = from boardgame in _boardGameRepository.ReadAll()
                         where boardgame.MinPlayer == 1
@@ -114,10 +114,14 @@ namespace XCWED2_HFT_2021221.Logic.Services
                             Rating = boardgame.Rating,
                         };
 
+            if (games == null)
+            {
+                throw new NullReferenceException();
+            }
+
             var ordered = games.OrderByDescending(x => x.Rating);
 
-            Console.WriteLine("Best game what can be played alone also:");
-            Console.WriteLine(ordered.FirstOrDefault().Name);
+            return (ordered.FirstOrDefault().Name);
         }
     }
 }
