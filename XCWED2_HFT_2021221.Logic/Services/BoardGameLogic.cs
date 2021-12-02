@@ -90,14 +90,6 @@ namespace XCWED2_HFT_2021221.Logic.Services
 
         public IEnumerable<NationalityCount> GamesByDesignerNationality()
         {
-            //var games = from boardgame in _boardGameRepository.ReadAll()
-            //            group boardgame by boardgame.DesignerID into grouped
-            //            select new
-            //            {
-            //                DesignerID = grouped.Key,
-            //                Count = grouped.Count()
-            //            };
-
             var countryList = from boardgame in _boardGameRepository.ReadAll()
                               join designer in _designerRepository.ReadAll()
                               on boardgame.DesignerID equals designer.Id

@@ -80,16 +80,15 @@ namespace XCWED2_HFT_2021221.Endpoint.Controllers
         {
             var result = new ApiResult(true);
 
-            //try
-            //{
-            //    designerLogic.Delete(id);
-            //}
-            //catch (Exception)
-            //{
-            //    result.IsSuccess = false;
-            //}
+            try
+            {
+                designerLogic.Delete(id);
+            }
+            catch (Exception)
+            {
+                result.IsSuccess = false;
+            }
 
-            designerLogic.Delete(id);
 
             return result;
         }
