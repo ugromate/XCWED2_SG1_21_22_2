@@ -89,14 +89,17 @@ namespace XCWED2_HFT_2021221.Client
                 Console.WriteLine($"Best game what can be played alone: {bestalone.Name} - {bestalone.Rating}"); 
                 Console.ReadLine();
             })
-            .Add("Games By Designer Nationality", () => {
+            .Add("Games By Designer Nationality", () =>
+            {
                 Console.WriteLine($"Number of games by nationality ");
                 DisplayNationality();
-                Console.ReadLine();})
+                Console.ReadLine();
+            })
             .Add("Average Publisher Prices", () => { 
                 Console.WriteLine($"Average price of games by publisher\n");
                 DisplayPublisherAverage();
-                Console.ReadLine(); })
+                Console.ReadLine(); 
+            })
             .Add("Most Popular Designer", () => { 
                 Console.WriteLine($"Most popular designer by game rating ");
                 Console.WriteLine(  httpSeviceDesigner.Get<AverageDesigner>("MostPopularDesigner").ToString()) ; 
@@ -261,7 +264,6 @@ namespace XCWED2_HFT_2021221.Client
             {
                 Console.WriteLine(publisherAverage);
             }
-            Console.ReadLine();
         }
 
         private static void DisplayNationality()
@@ -272,7 +274,6 @@ namespace XCWED2_HFT_2021221.Client
             {
                 Console.WriteLine(publisherAverage);
             }
-            Console.ReadLine();
         }
     }
 }
