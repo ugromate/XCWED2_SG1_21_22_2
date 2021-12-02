@@ -80,6 +80,18 @@ namespace XCWED2_HFT_2021221.Client
             }
         }
 
+        //For non-CRUD methodes
+        public T Get<T>(string actionName = null)
+        {
+            using (var client = new HttpClient())
+            {
+                InitClient(client);
+
+                var response = client.GetAsync($"{GetActionName(actionName ?? nameof(Get))}").GetAwaiter().GetResult(); // Block here
+                return JsonSerializer.Deserialize<T>(response.Content.ReadAsStringAsync().GetAwaiter().GetResult(), serializerOptions);
+            }
+        }
+
         private string GetActionName(string actionName) => $"{controllerName}/{actionName}";
 
         private void InitClient(HttpClient client)

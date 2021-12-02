@@ -15,15 +15,6 @@ namespace XCWED2_HFT_2021221.Test
     [TestFixture]
     class Tests
     {
-        List<Publisher> publishers = new List<Publisher>() {
-        new Publisher() { Id = 1, Name = "Z - Man Games", Country = "US" },
-        new Publisher() { Id = 2, Name = "KOSMOS", Country = "Germany" }
-        };
-
-        List<BoardGame> boardGames = new List<BoardGame>() {
-        new BoardGame() { Id = 1, Name = "Pandemic", DesignerID = 1, PublisherID = 1, MinPlayer = 2, MaxPlayer = 4, MinAge = 8, Rating = 7.6, PriceHUF = 10000 },
-        new BoardGame() { Id = 2, Name = "Carcassone", DesignerID = 3, PublisherID = 1, MinPlayer = 2, MaxPlayer = 5, MinAge = 7, Rating = 7.4, PriceHUF = 7300 }
-        };
 
         [Test]
         public void PublisherCreate()
@@ -37,9 +28,8 @@ namespace XCWED2_HFT_2021221.Test
             Publisher publisher = new Publisher();
             publisherRepo.Setup(x => x.Create(publisher)).Returns(publisher);
 
-
             // Act
-          Publisher  result = logic.Create(publisher);
+            Publisher result = logic.Create(publisher);
 
             // Assert
             Assert.That(result, Is.Not.Null);
@@ -53,8 +43,6 @@ namespace XCWED2_HFT_2021221.Test
             var publisherRepo = new Mock<IPublisherRepository>();
             var designerRepo = new Mock<IDesignerRepository>();
             var logic = new PublisherLogic(boardGameRepo.Object, publisherRepo.Object, designerRepo.Object);
-
-
 
             // Act
             var exception = Assert.Throws(typeof(Exception), () => logic.Create(null));
@@ -120,6 +108,7 @@ namespace XCWED2_HFT_2021221.Test
 
         }
 
+        [Test]
         public void DesignerCreateWithNull()
         {
             //Assert
@@ -136,11 +125,19 @@ namespace XCWED2_HFT_2021221.Test
             Assert.That(exception, Is.Not.Null);
         }
 
-
-
         [Test]
         public void AveragePublisherWithOneBoardGameOnePublisher()
         {
+            List<Publisher> publishers = new List<Publisher>() {
+        new Publisher() { Id = 1, Name = "Z - Man Games", Country = "US" },
+        new Publisher() { Id = 2, Name = "KOSMOS", Country = "Germany" }
+        };
+
+            List<BoardGame> boardGames = new List<BoardGame>() {
+        new BoardGame() { Id = 1, Name = "Pandemic", DesignerID = 1, PublisherID = 1, MinPlayer = 2, MaxPlayer = 4, MinAge = 8, Rating = 7.6, PriceHUF = 10000 },
+        new BoardGame() { Id = 2, Name = "Carcassone", DesignerID = 3, PublisherID = 1, MinPlayer = 2, MaxPlayer = 5, MinAge = 7, Rating = 7.4, PriceHUF = 7300 }
+        };
+
             //arrange
             var boardGameRepo = new Mock<IBoardGameRepository>();
             var publisherRepo = new Mock<IPublisherRepository>();
@@ -171,6 +168,15 @@ namespace XCWED2_HFT_2021221.Test
         [Test]
         public void AveragePublisherWithoutBoardGame()
         {
+            List<Publisher> publishers = new List<Publisher>() {
+        new Publisher() { Id = 1, Name = "Z - Man Games", Country = "US" },
+        new Publisher() { Id = 2, Name = "KOSMOS", Country = "Germany" }
+        };
+
+            List<BoardGame> boardGames = new List<BoardGame>() {
+        new BoardGame() { Id = 1, Name = "Pandemic", DesignerID = 1, PublisherID = 1, MinPlayer = 2, MaxPlayer = 4, MinAge = 8, Rating = 7.6, PriceHUF = 10000 },
+        new BoardGame() { Id = 2, Name = "Carcassone", DesignerID = 3, PublisherID = 1, MinPlayer = 2, MaxPlayer = 5, MinAge = 7, Rating = 7.4, PriceHUF = 7300 }
+        };
 
             //arrange
             var boardGameRepo = new Mock<IBoardGameRepository>();
@@ -244,7 +250,7 @@ namespace XCWED2_HFT_2021221.Test
             var logic = new DesignerLogic(boardGameRepo.Object, publisherRepo.Object, designerRepo.Object);
 
             //act
-            string result = logic.MostPopularDesigner();
+            string result = logic.MostPopularDesigner().ToString();
 
             //assert
             Assert.That(result, Is.Null);
@@ -278,10 +284,10 @@ namespace XCWED2_HFT_2021221.Test
 
 
             //Act
-            string mostPopular = logic.MostPopularDesigner();
+            string mostPopular = logic.MostPopularDesigner().ToString();
 
             //Assert
-            Assert.That(mostPopular, Is.EqualTo("Matt Leacock - 7.5"));
+            Assert.That(mostPopular, Is.EqualTo("Matt Leacock - 7,5"));
         }
 
         [Test]
@@ -298,7 +304,7 @@ namespace XCWED2_HFT_2021221.Test
             var boardGameRepo = new Mock<IBoardGameRepository>();
             var publisherRepo = new Mock<IPublisherRepository>();
             var designerRepo = new Mock<IDesignerRepository>();
-            var logic = new PublisherLogic(boardGameRepo.Object, publisherRepo.Object, designerRepo.Object);
+            var logic = new BoardGameLogic(boardGameRepo.Object, publisherRepo.Object, designerRepo.Object);
 
             boardGameRepo.Setup(x => x.ReadAll()).Returns(boardGames.AsQueryable());
 
@@ -323,7 +329,7 @@ namespace XCWED2_HFT_2021221.Test
             var boardGameRepo = new Mock<IBoardGameRepository>();
             var publisherRepo = new Mock<IPublisherRepository>();
             var designerRepo = new Mock<IDesignerRepository>();
-            var logic = new PublisherLogic(boardGameRepo.Object, publisherRepo.Object, designerRepo.Object);
+            var logic = new BoardGameLogic(boardGameRepo.Object, publisherRepo.Object, designerRepo.Object);
 
             boardGameRepo.Setup(x => x.ReadAll()).Returns(boardGames.AsQueryable());
 
@@ -348,7 +354,7 @@ namespace XCWED2_HFT_2021221.Test
             var boardGameRepo = new Mock<IBoardGameRepository>();
             var publisherRepo = new Mock<IPublisherRepository>();
             var designerRepo = new Mock<IDesignerRepository>();
-            var logic = new PublisherLogic(boardGameRepo.Object, publisherRepo.Object, designerRepo.Object);
+            var logic = new BoardGameLogic(boardGameRepo.Object, publisherRepo.Object, designerRepo.Object);
 
             boardGameRepo.Setup(x => x.ReadAll()).Returns(boardGames.AsQueryable());
 
@@ -373,15 +379,74 @@ namespace XCWED2_HFT_2021221.Test
             var boardGameRepo = new Mock<IBoardGameRepository>();
             var publisherRepo = new Mock<IPublisherRepository>();
             var designerRepo = new Mock<IDesignerRepository>();
-            var logic = new PublisherLogic(boardGameRepo.Object, publisherRepo.Object, designerRepo.Object);
+            var logic = new BoardGameLogic(boardGameRepo.Object, publisherRepo.Object, designerRepo.Object);
 
             boardGameRepo.Setup(x => x.ReadAll()).Returns(boardGames.AsQueryable());
 
             //Act
-            string result = logic.BestAlonePlayable();
+           var result = logic.BestAlonePlayable();
 
             //Assert
-            Assert.That(result, Is.EqualTo("Pandemic"));
+            Assert.That(result.Name, Is.EqualTo("Pandemic"));
+        }
+
+        [Test]
+        public void GamesByDesignerNationalityWithoutBoardGame()
+        {
+
+            //arrange
+            var boardGameRepo = new Mock<IBoardGameRepository>();
+            var publisherRepo = new Mock<IPublisherRepository>();
+            var designerRepo = new Mock<IDesignerRepository>();
+            var logic = new BoardGameLogic(boardGameRepo.Object, publisherRepo.Object, designerRepo.Object);
+
+
+            //Act
+            List<NationalityCount> games = logic.GamesByDesignerNationality().ToList();
+
+            //Assert
+            Assert.That(games, Is.Empty);
+        }
+
+        [Test]
+        public void GamesByDesignerNationalityWithMany()
+        {
+
+            //arrange
+            List<BoardGame> boardGames = new List<BoardGame>() {
+        new BoardGame() { Id = 1, Name = "Pandemic", DesignerID = 1, PublisherID = 1, MinPlayer = 2, MaxPlayer = 4, MinAge = 8, Rating = 7.6, PriceHUF = 10000 },
+        new BoardGame() { Id = 2, Name = "Carcassone", DesignerID = 1, PublisherID = 1, MinPlayer = 2, MaxPlayer = 5, MinAge = 7, Rating = 7.4, PriceHUF = 7300 },
+        new BoardGame() { Id = 7, Name = "Forbidden Island", DesignerID = 1, PublisherID = 1, MinPlayer = 2, MaxPlayer = 4, MinAge = 10, Rating = 6.8, PriceHUF = 7000 },
+        new BoardGame() { Id = 5, Name = "Hanamikoji", DesignerID = 6, PublisherID = 3, MinPlayer = 2, MaxPlayer = 2, MinAge = 10, Rating = 7.5, PriceHUF = 4000 },
+        new BoardGame() { Id = 8, Name = "Settlers of Catan", DesignerID = 2, PublisherID = 2, MinPlayer = 3, MaxPlayer = 4, MinAge = 10, Rating = 7.1, PriceHUF = 9000 }
+
+        };
+            List<Designer> designers = new List<Designer>() {
+          new Designer() { Id = 1, Name = "Matt Leacock", Nationality = "US" },
+          new Designer() { Id = 2, Name = "Klaus Teuber", Nationality = "German" },
+          new Designer() { Id = 6, Name = "Kota Nakayama", Nationality = "Japan" }
+        };
+
+            var boardGameRepo = new Mock<IBoardGameRepository>();
+            var publisherRepo = new Mock<IPublisherRepository>();
+            var designerRepo = new Mock<IDesignerRepository>();
+            var logic = new BoardGameLogic(boardGameRepo.Object, publisherRepo.Object, designerRepo.Object);
+
+            designerRepo.Setup(x => x.ReadAll()).Returns(designers.AsQueryable());
+            boardGameRepo.Setup(x => x.ReadAll()).Returns(boardGames.AsQueryable());
+
+
+            //Act
+            List<NationalityCount> games = logic.GamesByDesignerNationality().ToList();
+
+
+            //Assert
+            Assert.That(games[0].Nationality, Is.EqualTo("US"));
+            Assert.That(games[0].Count, Is.EqualTo(3));
+            Assert.That(games[1].Nationality, Is.EqualTo("German"));
+            Assert.That(games[1].Count, Is.EqualTo(1));
+            Assert.That(games[2].Nationality, Is.EqualTo("Japan"));
+            Assert.That(games[2].Count, Is.EqualTo(1));
         }
 
     }

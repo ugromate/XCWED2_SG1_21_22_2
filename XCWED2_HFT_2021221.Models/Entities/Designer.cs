@@ -17,8 +17,10 @@ namespace XCWED2_HFT_2021221.Models.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public string Nationality { get; set; }
 
         [JsonIgnore]

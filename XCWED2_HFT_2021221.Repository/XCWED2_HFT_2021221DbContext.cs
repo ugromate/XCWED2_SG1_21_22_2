@@ -30,13 +30,14 @@ namespace XCWED2_HFT_2021221.Repository.DbContexts
             e.HasOne(b => b.Publisher)
             .WithMany(p => p.BoardGames)
             .HasForeignKey(b => b.PublisherID)
-            .OnDelete(DeleteBehavior.ClientSetNull));
+            .OnDelete(DeleteBehavior.Cascade));
 
             modelBuilder.Entity<BoardGame>(e =>
             e.HasOne(b => b.Designer)
             .WithMany(d => d.BoardGames)
             .HasForeignKey(b => b.DesignerID)
-            .OnDelete(DeleteBehavior.ClientSetNull));
+            .OnDelete(DeleteBehavior.Cascade));
+
 
             //seed
             var zmangames = new Publisher() { Id = 1, Name = "Z - Man Games", Country = "US" };

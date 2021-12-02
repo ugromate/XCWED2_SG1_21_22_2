@@ -25,7 +25,6 @@ namespace XCWED2_HFT_2021221.Logic.Services
 
         public Publisher Create(Publisher entity)
         {
-            // TODO check access
 
             if (entity == null)
             {
@@ -33,8 +32,6 @@ namespace XCWED2_HFT_2021221.Logic.Services
             } 
 
             var result = _publisherRepository.Create(entity);
-
-            // TODO: log
 
             return result;
         }
@@ -49,11 +46,11 @@ namespace XCWED2_HFT_2021221.Logic.Services
         }
         public Publisher Update(Publisher entity)
         {
-            // TODO check access
 
-            // TODO: validate !!!
-
-            // TODO: map only what can be changed
+            if (entity == null)
+            {
+                throw new Exception();
+            }
 
             var result = _publisherRepository.Update(entity);
 
@@ -64,10 +61,6 @@ namespace XCWED2_HFT_2021221.Logic.Services
 
         public void Delete(int id)
         {
-            // TODO check access
-
-            // TODO: check relations (can I delete)
-
             _publisherRepository.Delete(id);
         }
 
@@ -78,7 +71,7 @@ namespace XCWED2_HFT_2021221.Logic.Services
                            select new
                            {
                                PublisherId = grouped.Key,
-                               Average = grouped.Average(x => x.PriceHUF)
+                               Average = grouped.Average((x => x.PriceHUF))
                            };
 
             var result = from publisher in _publisherRepository.ReadAll()
@@ -87,41 +80,10 @@ namespace XCWED2_HFT_2021221.Logic.Services
                          select new AveragePublisher()
                          {
                              PublisherName = publisher.Name,
-                             Average = average.Average
+                             Average = Math.Round(average.Average)
                          };
 
             return result.ToList();
-        }
-
-        public int TwoKidGameCount()
-        {
-            var games = from boardgame in _boardGameRepository.ReadAll()
-                           where boardgame.MinAge < 11 && boardgame.MinPlayer == 2
-                           select new
-                           {
-                               Name = boardgame.Name
-                           };
-           return games.Count();
-        }
-
-        public string BestAlonePlayable()
-        {
-            var games = from boardgame in _boardGameRepository.ReadAll()
-                        where boardgame.MinPlayer == 1
-                        select new
-                        {
-                            Name = boardgame.Name,
-                            Rating = boardgame.Rating,
-                        };
-
-            if (games == null)
-            {
-                throw new NullReferenceException();
-            }
-
-            var ordered = games.OrderByDescending(x => x.Rating);
-
-            return (ordered.FirstOrDefault().Name);
         }
     }
 }

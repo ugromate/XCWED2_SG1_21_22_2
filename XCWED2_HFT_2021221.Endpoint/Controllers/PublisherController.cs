@@ -12,40 +12,40 @@ namespace XCWED2_HFT_2021221.Endpoint.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class DesignerController : Controller
+    public class PublisherController : Controller
     {
-        readonly IDesignerLogic designerLogic;
+        readonly IPublisherLogic publisherLogic;
 
-        public DesignerController(IDesignerLogic designerLogic)
+        public PublisherController(IPublisherLogic PublisherLogic)
         {
-            this.designerLogic = designerLogic;
+            this.publisherLogic = PublisherLogic;
         }
 
-        // GET: api/Designer/GetAll
+        // GET: api/Publisher/GetAll
         [HttpGet]
         [ActionName("GetAll")]
-        public IEnumerable<Designer> Get()
+        public IEnumerable<Publisher> Get()
         {
-            return designerLogic.ReadAll();
+            return publisherLogic.ReadAll();
         }
 
-        // GET api/Designer/Get/5
+        // GET api/Publisher/Get/5
         [HttpGet("{id}")]
-        public Designer Get(int id)
+        public Publisher Get(int id)
         {
-            return designerLogic.Read(id);
+            return publisherLogic.Read(id);
         }
 
-        // POST api/Designer/Create
+        // POST api/Publisher/Create
         [HttpPost]
         [ActionName("Create")]
-        public ApiResult Post(Designer designer)
+        public ApiResult Post(Publisher Publisher)
         {
             var result = new ApiResult(true);
 
             try
             {
-                designerLogic.Create(designer);
+                publisherLogic.Create(Publisher);
             }
             catch (Exception)
             {
@@ -55,16 +55,16 @@ namespace XCWED2_HFT_2021221.Endpoint.Controllers
             return result;
         }
 
-        // PUT api/Designer/Update
+        // PUT api/Publisher/Update
         [HttpPut]
         [ActionName("Update")]
-        public ApiResult Put(Designer designer)
+        public ApiResult Put(Publisher Publisher)
         {
             var result = new ApiResult(true);
 
             try
             {
-                designerLogic.Update(designer);
+                publisherLogic.Update(Publisher);
             }
             catch (Exception)
             {
@@ -74,35 +74,30 @@ namespace XCWED2_HFT_2021221.Endpoint.Controllers
             return result;
         }
 
-        // DELETE api/Designer/Delete/5
+        // DELETE api/Publisher/Delete/5
         [HttpDelete("{id}")]
         public ApiResult Delete(int id)
         {
             var result = new ApiResult(true);
 
-            //try
-            //{
-            //    designerLogic.Delete(id);
-            //}
-            //catch (Exception)
-            //{
-            //    result.IsSuccess = false;
-            //}
-
-            designerLogic.Delete(id);
+            try
+            {
+                publisherLogic.Delete(id);
+            }
+            catch (Exception)
+            {
+                result.IsSuccess = false;
+            }
 
             return result;
         }
 
-
-        //GET: api/Designer/MostPopularDesigner
+        //GET: api/Publisher/GetPublisherAverages
         [HttpGet]
-        [ActionName("MostPopularDesigner")]
-        public AverageDesigner MostPopularDesigner()
+        [ActionName("GetPublisherAverages")]
+        public IEnumerable<AveragePublisher> GetPublisherAverages()
         {
-            return designerLogic.MostPopularDesigner();
+            return publisherLogic.GetPublisherAverages();
         }
-
-
     }
 }

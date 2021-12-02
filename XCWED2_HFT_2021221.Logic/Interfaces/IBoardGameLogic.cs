@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XCWED2_HFT_2021221.Models.Entities;
+using XCWED2_HFT_2021221.Models.Models;
 
 namespace XCWED2_HFT_2021221.Logic.Interfaces
 {
@@ -18,5 +19,11 @@ namespace XCWED2_HFT_2021221.Logic.Interfaces
         BoardGame Update(BoardGame entity);
 
         void Delete(int id);
+
+        int TwoKidGameCount();
+
+        BoardGame BestAlonePlayable();
+
+        IEnumerable<NationalityCount> GamesByDesignerNationality();
     }
 }

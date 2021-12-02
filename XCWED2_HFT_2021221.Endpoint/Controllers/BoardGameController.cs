@@ -11,7 +11,7 @@ using XCWED2_HFT_2021221.Models.Models;
 
 namespace XCWED2_HFT_2021221.Endpoint.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class BoardGameController : ControllerBase
     {
@@ -93,11 +93,28 @@ namespace XCWED2_HFT_2021221.Endpoint.Controllers
             return result;
         }
 
-        // GET: api/BoardGame/GetBrandAverages
-        //[HttpGet]
-        //public IEnumerable<AverageModel> GetBrandAverages()
-        //{
-        //    return boardGameLogic.GetBrandAverages();
-        //}
+        //GET: api/BoardGame/TwoKidGameCount
+        [HttpGet]
+        [ActionName("TwoKidGameCount")]
+        public int TwoKidGameCount()
+        {
+            return boardGameLogic.TwoKidGameCount();
+        }
+
+        //GET: api/BoardGame/GamesByDesignerNationality
+        [HttpGet]
+        [ActionName("GamesByDesignerNationality")]
+        public IEnumerable<NationalityCount> GamesByDesignerNationality()
+        {
+            return boardGameLogic.GamesByDesignerNationality();
+        }
+
+        //GET: api/BoardGame/BestAlonePlayable
+        [HttpGet]
+        [ActionName("BestAlonePlayable")]
+        public BoardGame BestAlonePlayable()
+        {
+            return boardGameLogic.BestAlonePlayable();
+        }
     }
 }

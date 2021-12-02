@@ -25,8 +25,6 @@ namespace XCWED2_HFT_2021221.Logic.Services
 
         public Designer Create(Designer entity)
         {
-            // TODO check access
-
 
             if (entity == null)
             {
@@ -34,8 +32,6 @@ namespace XCWED2_HFT_2021221.Logic.Services
             }
 
             var result = _designerRepository.Create(entity);
-
-            // TODO: log
 
             return result;
         }
@@ -51,28 +47,22 @@ namespace XCWED2_HFT_2021221.Logic.Services
 
         public Designer Update(Designer entity)
         {
-            // TODO check access
 
-            // TODO: validate !!!
-
-            // TODO: map only what can be changed
+            if (entity == null)
+            {
+                throw new Exception();
+            }
 
             var result = _designerRepository.Update(entity);
-
-            // TODO: log
 
             return result;
         }
         public void Delete(int id)
         {
-            // TODO check access
-
-            // TODO: check relations (can I delete)
-
             _designerRepository.Delete(id);
         }
 
-        public string MostPopularDesigner()
+        public AverageDesigner MostPopularDesigner()
         {
             var averages = from boardgame in _boardGameRepository.ReadAll()
                            group boardgame by boardgame.DesignerID into grouped
@@ -99,39 +89,9 @@ namespace XCWED2_HFT_2021221.Logic.Services
             }
             else
             {
-            return mostpopularDesigner.ToString();
+            return mostpopularDesigner;
             }
         }
 
-        public void GamesByNationality()
-        {
-            var games = from boardgame in _boardGameRepository.ReadAll()
-                        group boardgame by boardgame.DesignerID into grouped
-                        select new
-                        {
-                            DesignerID = grouped.Key,
-                            Count = grouped.Count()
-                        };
-
-            var countryList = from designer in _designerRepository.ReadAll()
-                              join game in games
-                              on designer.Id equals game.DesignerID
-                              select new
-                              {
-                                  Nationality = designer.Nationality,
-                                  Count = game.Count
-                              };
-
-            var list = countryList.ToList();
-
-            var gameNumber = games.Count();
-
-            Console.WriteLine("There are " + gameNumber + " games in the database");
-
-            foreach (var item in list)
-            {
-                Console.WriteLine(item.Nationality + " - " + item.Count);
-            }
-        }
     }
 }
