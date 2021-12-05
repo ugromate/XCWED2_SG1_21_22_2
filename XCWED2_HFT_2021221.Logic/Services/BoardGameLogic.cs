@@ -77,12 +77,6 @@ namespace XCWED2_HFT_2021221.Logic.Services
                         where boardgame.MinPlayer == 1
                         select boardgame;
 
-
-            if (games == null)
-            {
-                throw new NullReferenceException();
-            }
-
             var ordered = games.OrderByDescending(x => x.Rating);
 
             return (ordered.FirstOrDefault());

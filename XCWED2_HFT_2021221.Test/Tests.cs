@@ -250,7 +250,7 @@ namespace XCWED2_HFT_2021221.Test
             var logic = new DesignerLogic(boardGameRepo.Object, publisherRepo.Object, designerRepo.Object);
 
             //act
-            string result = logic.MostPopularDesigner().ToString();
+            AverageDesigner result = logic.MostPopularDesigner();
 
             //assert
             Assert.That(result, Is.Null);
@@ -359,10 +359,10 @@ namespace XCWED2_HFT_2021221.Test
             boardGameRepo.Setup(x => x.ReadAll()).Returns(boardGames.AsQueryable());
 
             //Act
-            var exception = Assert.Throws(typeof(NullReferenceException), () => logic.BestAlonePlayable());
+            var result = logic.BestAlonePlayable();
 
             // Assert
-            Assert.That(exception, Is.Not.Null);
+            Assert.That(result, Is.Null);
         }
 
         [Test]
