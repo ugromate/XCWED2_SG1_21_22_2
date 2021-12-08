@@ -67,8 +67,8 @@ namespace XCWED2_HFT_2021221.Client
             .Add("Display all publishers", () => DisplayPublishers())
             .Add("Display all designers", () => DisplayDesigner())
             .Add("Display one board game", () => DisplayOne(getOneBoardGame))
-            .Add("Display one publishers", () => DisplayOne(getOnePublisher))
-            .Add("Display one designers", () => DisplayOne(getOneDesigner))
+            .Add("Display one publisher", () => DisplayOne(getOnePublisher))
+            .Add("Display one designer", () => DisplayOne(getOneDesigner))
             .Add("Create new board game", () => CreateBoardGame(newboardGame))
             .Add("Create new publisher", () => CreatePublisher(newPublisher))
             .Add("Create new designer", () => CreateDesigner(newDesigner))
@@ -80,30 +80,30 @@ namespace XCWED2_HFT_2021221.Client
             .Add("Delete last designer", () => DeleteDesigner())
             .Add("How many games can play 2 child who are 10 years old", () => 
             {
-                Console.WriteLine($"2 child who is 10 years old can play with: {httpSeviceBoardgame.Get<int>("TwoKidGameCount")} games"); 
-                Console.ReadLine();
+                Console.WriteLine($"2 child who is 10 years old can play with: {httpSeviceBoardgame.Get<int>("TwoKidGameCount")} games");
+                MenuCall();
             })
             .Add("Best game what can be played alone", () =>
             {
                 BoardGame bestalone =  httpSeviceBoardgame.Get<BoardGame>("BestAlonePlayable");
-                Console.WriteLine($"Best game what can be played alone: {bestalone.Name} - {bestalone.Rating}"); 
-                Console.ReadLine();
+                Console.WriteLine($"Best game what can be played alone: {bestalone.Name} - {bestalone.Rating}");
+                MenuCall();
             })
             .Add("Games By Designer Nationality", () =>
             {
                 Console.WriteLine($"Number of games by nationality ");
                 DisplayNationality();
-                Console.ReadLine();
+                MenuCall();
             })
             .Add("Average Publisher Prices", () => { 
                 Console.WriteLine($"Average price of games by publisher\n");
                 DisplayPublisherAverage();
-                Console.ReadLine(); 
+                MenuCall();
             })
             .Add("Most Popular Designer", () => { 
                 Console.WriteLine($"Most popular designer by game rating ");
-                Console.WriteLine(  httpSeviceDesigner.Get<AverageDesigner>("MostPopularDesigner").ToString()) ; 
-                Console.ReadLine(); 
+                Console.WriteLine(  httpSeviceDesigner.Get<AverageDesigner>("MostPopularDesigner").ToString()) ;
+                MenuCall();
             })
             .Add("Close", ConsoleMenu.Close)
             .Configure(config => { config.Selector = "--> "; })
@@ -121,7 +121,7 @@ namespace XCWED2_HFT_2021221.Client
             {
                 Console.WriteLine(boardGame.ToString());
             }
-            Console.ReadLine();
+            MenuCall();
         }
 
         private static void DisplayDesigner()
@@ -131,7 +131,7 @@ namespace XCWED2_HFT_2021221.Client
             {
                 Console.WriteLine(designer.ToString());
             }
-            Console.ReadLine();
+            MenuCall();
         }
 
         private static void DisplayPublishers()
@@ -141,13 +141,13 @@ namespace XCWED2_HFT_2021221.Client
             {
                 Console.WriteLine(publisher.ToString());
             }
-            Console.ReadLine();
+            MenuCall();
         }
 
         private static void DisplayOne(object item)
         {
             Console.WriteLine(item.ToString());
-            Console.ReadLine();
+            MenuCall();
         }
 
         private static void CreateBoardGame(BoardGame newboardGame)
@@ -157,7 +157,7 @@ namespace XCWED2_HFT_2021221.Client
             {
                 Console.WriteLine("Creation was succesfull");
             }
-            Console.ReadLine();
+            MenuCall();
         }
 
         private static void CreateDesigner(Designer newDesigner)
@@ -167,7 +167,7 @@ namespace XCWED2_HFT_2021221.Client
             {
                 Console.WriteLine("Creation was succesfull");
             }
-            Console.ReadLine();
+            MenuCall();
         }
 
         private static void CreatePublisher(Publisher newPublisher)
@@ -177,7 +177,7 @@ namespace XCWED2_HFT_2021221.Client
             {
                 Console.WriteLine("Creation was succesfull");
             }
-            Console.ReadLine();
+            MenuCall();
         }
 
         private static void UpdateBoardGame()
@@ -191,7 +191,7 @@ namespace XCWED2_HFT_2021221.Client
             {
                 Console.WriteLine("Update was succesfull");
             }
-            Console.ReadLine();
+            MenuCall();
         }
 
         private static void UpdateDesigner()
@@ -204,7 +204,7 @@ namespace XCWED2_HFT_2021221.Client
             {
                 Console.WriteLine("Update was succesfull");
             }
-            Console.ReadLine();
+            MenuCall();
         }
 
         private static void UpdatePublisher()
@@ -217,7 +217,7 @@ namespace XCWED2_HFT_2021221.Client
             {
                 Console.WriteLine("Update was succesfull");
             }
-            Console.ReadLine();
+            MenuCall();
         }
 
         private static void DeleteBoardGame()
@@ -229,7 +229,7 @@ namespace XCWED2_HFT_2021221.Client
             {
                 Console.WriteLine("Delete was succesfull");
             }
-            Console.ReadLine();
+            MenuCall();
         }
 
         private static void DeleteDesigner()
@@ -241,7 +241,7 @@ namespace XCWED2_HFT_2021221.Client
             {
                 Console.WriteLine("Delete was succesfull");
             }
-            Console.ReadLine();
+            MenuCall();
         }
 
         private static void DeletePublisher()
@@ -253,7 +253,7 @@ namespace XCWED2_HFT_2021221.Client
             {
                 Console.WriteLine("Delete was succesfull");
             }
-            Console.ReadLine();
+            MenuCall();
         }
 
         private static void DisplayPublisherAverage()
@@ -274,6 +274,12 @@ namespace XCWED2_HFT_2021221.Client
             {
                 Console.WriteLine(publisherAverage);
             }
+        }
+
+        private static void MenuCall()
+        {
+            Console.WriteLine("Press a button to go back to the menu");
+            Console.ReadLine();
         }
     }
 }
