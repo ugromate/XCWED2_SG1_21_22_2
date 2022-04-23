@@ -78,6 +78,40 @@ namespace XCWED2_SG1_21_22_2.WpfClient.Models
         }
         #endregion
 
+        public BoardGame()
+        {
 
+        }
+
+        public BoardGame(int id, string name, int priceHUF, int minPlayer, int maxPlayer, int minAge, double rating, int designerID, int publisherID)
+        {
+            this.id = id;
+            this.name = name;
+            this.priceHUF = priceHUF;
+            this.minPlayer = minPlayer;
+            this.maxPlayer = maxPlayer;
+            this.minAge = minAge;
+            this.rating = rating;
+            this.designerID = designerID;
+            this.publisherID = publisherID;
+        }
+
+        public BoardGame(BoardGame other)
+        {
+            id = other.Id;
+            name = other.Name;
+            priceHUF = other.PriceHUF;
+            minPlayer = other.MinPlayer;
+            maxPlayer = other.MaxPlayer;
+            minAge = other.MinAge;
+            rating = other.Rating;
+            designerID = other.DesignerID;
+            publisherID = other.PublisherID;
+        }
+
+        public override string ToString()
+        {
+            return $"Name: {Name}\nPublisherID: {publisherID}\nDesignerID: {designerID}\nPlayers: {MinPlayer}-{MaxPlayer}\nMinAge: {MinAge}\nRating: {Rating}\nPriceHUF: {PriceHUF}\n";
+        }
     }
 }
