@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XCWED2_SG1_21_22_2.Models\XCWED2_SG1_21_22_2.Models.csproj" />
+    <ProjectReference Include="..\XCWED2_SG1_21_22_2.Repository\XCWED2_SG1_21_22_2.Repository.csproj" />
+  </ItemGroup>
+
+</Project>

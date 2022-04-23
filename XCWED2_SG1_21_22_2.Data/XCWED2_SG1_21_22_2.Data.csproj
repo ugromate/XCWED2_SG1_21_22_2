@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="XCWED2_SG1_21_22_2Db.mdf" />
+    <None Remove="XCWED2_SG1_21_22_2_log.ldf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="XCWED2_SG1_21_22_2Db.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XCWED2_SG1_21_22_2_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XCWED2_SG1_21_22_2.Models\XCWED2_SG1_21_22_2.Models.csproj" />
+  </ItemGroup>
+
+</Project>

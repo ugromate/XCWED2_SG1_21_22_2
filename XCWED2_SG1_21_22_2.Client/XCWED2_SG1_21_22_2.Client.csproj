@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ConsoleMenu-simple" Version="2.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XCWED2_SG1_21_22_2.Endpoint\XCWED2_SG1_21_22_2.Endpoint.csproj" />
+    <ProjectReference Include="..\XCWED2_SG1_21_22_2.Logic\XCWED2_SG1_21_22_2.Logic.csproj" />
+    <ProjectReference Include="..\XCWED2_SG1_21_22_2.Models\XCWED2_SG1_21_22_2.Models.csproj" />
+  </ItemGroup>
+
+</Project>
