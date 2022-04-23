@@ -15,8 +15,4 @@
     <ProjectReference Include="..\XCWED2_SG1_21_22_2.Models\XCWED2_SG1_21_22_2.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="BL\" />
-  </ItemGroup>
-
 </Project>

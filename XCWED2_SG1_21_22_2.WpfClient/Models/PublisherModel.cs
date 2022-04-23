@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace XCWED2_SG1_21_22_2.WpfClient.Models
 {
-    class PublisherModel
+   public class PublisherModel
     {
         public int ID { get; set; }
 

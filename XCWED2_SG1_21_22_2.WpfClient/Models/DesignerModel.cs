@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace XCWED2_SG1_21_22_2.WpfClient.Models
 {
-    class DesignerModel
+   public class DesignerModel
     {
         public int ID { get; set; }
 
