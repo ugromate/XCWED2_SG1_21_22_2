@@ -59,7 +59,6 @@ namespace XCWED2_SG1_21_22_2.WpfClient.BL.Implementation
 
                     if (operationResult.IsSuccess)
                     {
-                        //collection.Add(newCar);
                         RefreshCollectionFromServer(collection);
 
                         SendMessage("Board game add was successful");
@@ -108,8 +107,6 @@ namespace XCWED2_SG1_21_22_2.WpfClient.BL.Implementation
 
         public IList<DesignerModel> GetAllDesigner()
         {
-            //Will it get from server???
-
             var designers = httpServiceDesigner.GetAll<Designer>();
 
             return designers.Select(x => new DesignerModel(x.Id,x.Name,x.Nationality)).ToList(); 
