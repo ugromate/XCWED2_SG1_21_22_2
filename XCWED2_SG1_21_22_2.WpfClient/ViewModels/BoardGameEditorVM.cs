@@ -80,7 +80,7 @@ namespace XCWED2_SG1_21_22_2.WpfClient.ViewModels
                 {
                     new PublisherModel(1, "Z - Man Games", "US" ),
                     new PublisherModel(2, "KOSMOS", "German" ),
-                    new PublisherModel(2, "SFantasy Flight Games", "US" )
+                    new PublisherModel(2, "Fantasy Flight Games", "US" )
                 };
 
                 selectedDesigner = AvailableDesigners[2];

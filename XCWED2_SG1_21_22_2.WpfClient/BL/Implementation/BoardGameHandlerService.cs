@@ -18,6 +18,8 @@ namespace XCWED2_SG1_21_22_2.WpfClient.BL.Implementation
         readonly IBoardGameEditorService editorService;
         readonly IBoardGameDisplayService displayService;
         HttpService httpService;
+        HttpService httpServiceDesigner;
+        HttpService httpServicePublisher;
 
         public BoardGameHandlerService(IMessenger messenger, IBoardGameEditorService editorService, IBoardGameDisplayService displayService)
         {
@@ -25,6 +27,8 @@ namespace XCWED2_SG1_21_22_2.WpfClient.BL.Implementation
             this.editorService = editorService;
             this.displayService = displayService;
             httpService = new HttpService("BoardGame", "http://localhost:48914/api/");
+            httpServiceDesigner = new HttpService("Designer", "http://localhost:48914/api/");
+            httpServicePublisher = new HttpService("Publisher", "http://localhost:48914/api/");
         }
 
         public void AddBoardGame(IList<BoardGameModel> collection)
@@ -106,14 +110,14 @@ namespace XCWED2_SG1_21_22_2.WpfClient.BL.Implementation
         {
             //Will it get from server???
 
-            var designers = httpService.GetAll<Designer>();
+            var designers = httpServiceDesigner.GetAll<Designer>();
 
             return designers.Select(x => new DesignerModel(x.Id,x.Name,x.Nationality)).ToList(); 
         }
 
         public IList<PublisherModel> GetAllPublisher()
         {
-            var publishers = httpService.GetAll<Publisher>();
+            var publishers = httpServicePublisher.GetAll<Publisher>();
 
             return publishers.Select(x => new PublisherModel(x.Id, x.Name, x.Country)).ToList();
         }
