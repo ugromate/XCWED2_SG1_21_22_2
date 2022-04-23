@@ -13,9 +13,6 @@
     <Content Include="XCWED2_SG1_21_22_2Db.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="XCWED2_SG1_21_22_2_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +23,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\XCWED2_SG1_21_22_2.Models\XCWED2_SG1_21_22_2.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="XCWED2_SG1_21_22_2Db_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
