@@ -28,7 +28,7 @@
                 <Label Content="{Binding MaxPlayer}" HorizontalAlignment="Center" Grid.Column="3" />
                 <Label Content="{Binding MinAge}" HorizontalAlignment="Center" Grid.Column="4" />
                 <Label Content="{Binding Rating}" HorizontalAlignment="Center" Grid.Column="5" />
-                <Label Content="{Binding PriceHUF}" HorizontalAlignment="Center" Grid.Column="6" />
+                <Label Content="{Binding PriceHUF}" HorizontalAlignment="Center" Grid.Column="6" ContentStringFormat="{}{0} Ft" />
                 <Label Content="{Binding DesignerID}" HorizontalAlignment="Center" Grid.Column="7" />
                 <Label Content="{Binding PublisherID}" HorizontalAlignment="Center" Grid.Column="8" />
             </Grid>
