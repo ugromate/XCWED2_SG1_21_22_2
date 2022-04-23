@@ -1,6 +1,6 @@
 ﻿namespace XCWED2_SG1_21_22_2.Models.DTOs
 {
-    public class BoardGame
+    public class BoardGameDTO
     {
 
         public int Id { get; set; }

@@ -10,15 +10,16 @@ namespace XCWED2_SG1_21_22_2.Models.Models
     {
         public bool IsSuccess { get; set; }
 
-        // messages
+        public List<string> Messages { get; set; }
 
         public ApiResult()
         {
         }
 
-        public ApiResult(bool isSuccess)
+        public ApiResult(bool isSuccess, List<string> messages = null)
         {
             IsSuccess = isSuccess;
+            Messages = messages;
         }
     }
 }
