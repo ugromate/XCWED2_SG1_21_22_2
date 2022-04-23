@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:XCWED2_SG1_21_22_2.WpfClient"
+        xmlns:ViewModels="clr-namespace:XCWED2_SG1_21_22_2.WpfClient.ViewModels"
+        xmlns:Models="clr-namespace:XCWED2_SG1_21_22_2.WpfClient.Models"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="720" Width="1024" Loaded="WindowLoaded" Closing="WindowClose">
     <Window.Resources>
         <ViewModels:MainWindowVM x:Key="VM" />
         <DataTemplate x:Key="BoardGameTemplate" DataType="Models:BoardGameModel">
@@ -15,21 +16,54 @@
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
-                <Label Content="{Binding }" HorizontalAlignment="Center" Grid.Column="0" />
-                <Label Content="{Binding }" HorizontalAlignment="Center" Grid.Column="1" />
-                <Label Content="{Binding }" HorizontalAlignment="Center" Grid.Column="2" />
-                <Label Content="{Binding }" HorizontalAlignment="Center" Grid.Column="3" />
+                <Label Content="{Binding Id}" HorizontalAlignment="Center" Grid.Column="0" />
+                <Label Content="{Binding Name}" HorizontalAlignment="Center" Grid.Column="1" />
+                <Label Content="{Binding MinPlayer}" HorizontalAlignment="Center" Grid.Column="2" />
+                <Label Content="{Binding MaxPlayer}" HorizontalAlignment="Center" Grid.Column="3" />
+                <Label Content="{Binding MinAge}" HorizontalAlignment="Center" Grid.Column="4" />
+                <Label Content="{Binding Rating}" HorizontalAlignment="Center" Grid.Column="5" />
+                <Label Content="{Binding PriceHUF}" HorizontalAlignment="Center" Grid.Column="6" />
+                <Label Content="{Binding DesignerID}" HorizontalAlignment="Center" Grid.Column="7" />
+                <Label Content="{Binding PublisherID}" HorizontalAlignment="Center" Grid.Column="8" />
             </Grid>
         </DataTemplate>
     </Window.Resources>
-    <Grid>
+    <Grid DataContext="{StaticResource VM}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
             <RowDefinition Height="1*" />
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
-        <ListBox ItemsSource="{Binding }" SelectedItem="{Binding }" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource BoardGameTemplate}" />
-        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Id" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0"/>
+            <Label Content="Name" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"/>
+            <Label Content="Min Player" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2"/>
+            <Label Content="Max Player" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3"/>
+            <Label Content="Min Age" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4"/>
+            <Label Content="Rating" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="5"/>
+            <Label Content="Price" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="6"/>
+            <Label Content="DesignerID" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="7"/>
+            <Label Content="PublisherID" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="8"/>
+        </Grid>
+        <ListBox ItemsSource="{Binding BoardGames}" SelectedItem="{Binding CurrentBoardGame}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource BoardGameTemplate}" Grid.Row="1"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
             <Button Content="Load" Margin="5" MinWidth="50" Command="{Binding LoadCommand}" />
             <Button Content="View" Margin="5" MinWidth="50" Command="{Binding ViewCommand}" />
             <Button Content="Add" Margin="5" MinWidth="50" Command="{Binding AddCommand}" />

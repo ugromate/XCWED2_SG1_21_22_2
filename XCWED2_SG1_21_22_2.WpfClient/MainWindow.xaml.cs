@@ -24,5 +24,20 @@ namespace XCWED2_SG1_21_22_2.WpfClient
         {
             InitializeComponent();
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
+
+        private void WindowLoaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void WindowClose(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
     }
 }
