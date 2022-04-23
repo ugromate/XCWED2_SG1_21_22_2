@@ -8,7 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <ViewModels:MainWindowVM x:Key="VM" />
-        <DataTemplate x:Key="BoardGameTemplate" DataType="Models:BoardGame">
+        <DataTemplate x:Key="BoardGameTemplate" DataType="Models:BoardGameModel">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />

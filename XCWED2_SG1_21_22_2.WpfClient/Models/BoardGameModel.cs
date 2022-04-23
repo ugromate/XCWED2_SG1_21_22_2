@@ -2,7 +2,7 @@
 
 namespace XCWED2_SG1_21_22_2.WpfClient.Models
 {
-    public class BoardGame : ObservableObject
+    public class BoardGameModel : ObservableObject
     {
         #region Properties
         private int id;
@@ -78,12 +78,12 @@ namespace XCWED2_SG1_21_22_2.WpfClient.Models
         }
         #endregion
 
-        public BoardGame()
+        public BoardGameModel()
         {
 
         }
 
-        public BoardGame(int id, string name, int priceHUF, int minPlayer, int maxPlayer, int minAge, double rating, int designerID, int publisherID)
+        public BoardGameModel(int id, string name, int priceHUF, int minPlayer, int maxPlayer, int minAge, double rating, int designerID, int publisherID)
         {
             this.id = id;
             this.name = name;
@@ -96,7 +96,7 @@ namespace XCWED2_SG1_21_22_2.WpfClient.Models
             this.publisherID = publisherID;
         }
 
-        public BoardGame(BoardGame other)
+        public BoardGameModel(BoardGameModel other)
         {
             id = other.Id;
             name = other.Name;
