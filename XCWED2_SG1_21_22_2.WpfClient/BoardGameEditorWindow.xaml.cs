@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using XCWED2_SG1_21_22_2.WpfClient.Models;
+using XCWED2_SG1_21_22_2.WpfClient.ViewModels;
 
 namespace XCWED2_SG1_21_22_2.WpfClient
 {
@@ -23,9 +12,45 @@ namespace XCWED2_SG1_21_22_2.WpfClient
         public BoardGameModel BoardGame { get; set; }
         bool enableEdit;
 
-        public BoardGameEditorWindow()
+        public BoardGameEditorWindow(BoardGameModel boardGame = null, bool enableEdit = true)
         {
             InitializeComponent();
+            BoardGame = boardGame == null
+                ? new BoardGameModel()
+                : new BoardGameModel(boardGame);
+
+            this.enableEdit = enableEdit;
+        }
+
+        private void WindowLoaded(object sender, RoutedEventArgs e)
+        {
+            var vm = (BoardGameEditorVM)Resources["VM"];
+            vm.CurrentBoardGame = BoardGame;
+            vm.EditEnabled = enableEdit;
+        }
+
+        private void OkClick(object sender, RoutedEventArgs e)
+        {
+            if (enableEdit)
+            {
+                DialogResult = true;
+            }
+            else
+            {
+                Close();
+            }
+        }
+
+        private void CancelClick(object sender, RoutedEventArgs e)
+        {
+            if (enableEdit)
+            {
+                DialogResult = false;
+            }
+            else
+            {
+                Close();
+            }
         }
     }
 }
