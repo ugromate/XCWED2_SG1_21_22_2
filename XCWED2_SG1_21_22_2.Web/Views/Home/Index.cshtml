@@ -11,42 +11,63 @@
             <button class="btn btn-success" v-on:click="createBoardGame">Create</button>
             <button v-if="enabledBackToList" class="btn btn-secondary" v-on:click="backToList">Back to List</button>
         </div>
-        <div id="content">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Min Player</th>
-                        <th>Max Player</th>
-                        <th>Min Age</th>
-                        <th>Rating</th>
-                        <th>Price</th>
-                        <th>Designer ID</th>
-                        <th>Publisher ID</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{boardGames.length}}
-                    <tr v-for="boardGame in boardGames">
-                        <td>{{boardGame.id}}</td>
-                        <td>{{boardGame.name}}</td>
-                        <td>{{boardGame.minPlayer}}</td>
-                        <td>{{boardGame.maxPlayer}}</td>
-                        <td>{{boardGame.minAge}}</td>
-                        <td>{{boardGame.rating}}</td>
-                        <td>{{boardGame.priceHUF}}</td>
-                        <td>{{boardGame.designerID}}</td>
-                        <td>{{boardGame.publisherID}}</td>
-                        <td style="width:20%;text-align:right;">
-                            <button class="btn btn-info" v-on:click="viewBoardGame(boardGame)">View</button>
-                            <button class="btn btn-warning" v-on:click="editBoardGame(boardGame)">Edit</button>
-                            <button class="btn btn-danger" v-on:click="editBoardGame(boardGame)">Delete</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div id="content" style="display: flex; justify-content: center; flex-wrap: wrap;">
+            <div v-if="errors.length > 0">
+                <span v-for="msg in errors" style="color:red;font-weight:bold;">{{msg}}</span>
+            </div>
+            <div v-if="messages.lenght > 0">
+                <span v-for="msg in messages" style="color:green;">{{msg}}</span>
+            </div>
+            <template v-if="operationMode == 0">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Min Player</th>
+                            <th>Max Player</th>
+                            <th>Min Age</th>
+                            <th>Rating</th>
+                            <th>Price</th>
+                            <th>Designer ID</th>
+                            <th>Publisher ID</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="boardGame in boardGames">
+                            <td>{{boardGame.id}}</td>
+                            <td>{{boardGame.name}}</td>
+                            <td>{{boardGame.minPlayer}}</td>
+                            <td>{{boardGame.maxPlayer}}</td>
+                            <td>{{boardGame.minAge}}</td>
+                            <td>{{boardGame.rating}}</td>
+                            <td>{{boardGame.priceHUF}}</td>
+                            <td>{{boardGame.designerID}}</td>
+                            <td>{{boardGame.publisherID}}</td>
+                            <td style="width:20%;text-align:right;">
+                                <button class="btn btn-info" v-on:click="viewBoardGame(boardGame)">View</button>
+                                <button class="btn btn-warning" v-on:click="editBoardGame(boardGame)">Edit</button>
+                                <button class="btn btn-danger" v-on:click="editBoardGame(boardGame)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </template>
+            <template v-else-if="operationMode == 1">
+                <view-component v-bind:boardGame="selectedBoardGame"></view-component>
+            </template>
+            <template v-else-if="operationMode == 2">
+                <!--Create-->
+                <editor-component v-on:saved="savedSuccessfully"
+                                  v-on:cancelled="operationCancelled"></editor-component>
+            </template>
+            <template v-else>
+                <!--Modify-->
+                <editor-component v-bind:boardGame="selectedBoardGame"
+                                  v-on:saved="savedSuccessfully"
+                                   v-on:cancelled="operationCancelled"></editor-component>
+            </template>
         </div>
     </div>
 </div>
@@ -62,7 +83,16 @@
     var boardgGameHandlerApp = new Vue({
         el: '#boardgame-handler-app',
         data: {
-            boardGames: []
+            boardGames: [],
+            selectedBoardGame: {},
+            operationMode: 0, //0-listing, 1-view, 2-create, 3-modify
+            messages: [],
+            errors: []
+        },
+        computed: {
+            enabledBackToList() {
+                return this.operationMode != 0;
+            }
         },
         methods: {
             loadBoardGames() {
@@ -74,16 +104,28 @@
                 });
             },
             viewBoardGame: function (car) {
-                // TODO
+                this.selectedBoardGame = boardGame;
+                this.operationMode = 1;
             },
             editBoardGame: function (car) {
-                // TODO
+                this.selectedBoardGame = boardGame;
+                this.operationMode = 3
             },
             deleteBoardGame: function (car) {
-                // TODO
+                axi.delete('Delete/' + boardGame.id).then((response) => {
+                    if (response.data.isSuccess) {
+                        this.messages.push("BoardGame deleted successfully")
+                        this.loadBoardGames();
+
+                        setTimeout(() => { this.messages = []; }, 3000);
+            }
+            else {
+
+            }
+                })
             },
             createBoardGame: function () {
-                // TODO
+                this.operationMode = 2;
             }
         }
     })
