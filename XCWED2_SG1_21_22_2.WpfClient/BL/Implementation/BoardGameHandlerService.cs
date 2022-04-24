@@ -78,6 +78,12 @@ namespace XCWED2_SG1_21_22_2.WpfClient.BL.Implementation
 
         public void DeleteBoardGame(IList<BoardGameModel> collection, BoardGameModel boardGame)
         {
+            if (boardGame == null)
+            {
+                SendMessage("Please select a boardgame");
+                return;
+            }
+
             if (boardGame != null)
             {
                 var operationResult = httpService.Delete(boardGame.Id);
@@ -121,6 +127,12 @@ namespace XCWED2_SG1_21_22_2.WpfClient.BL.Implementation
 
         public void ModifyBoardGame(IList<BoardGameModel> collection, BoardGameModel boardGame)
         {
+            if (boardGame == null)
+            {
+                SendMessage("Please select a boardgame");
+                return;
+            }
+
             BoardGameModel boardGameToEdit = boardGame;
             bool operationFinished = false;
 

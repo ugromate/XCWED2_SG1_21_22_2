@@ -19,6 +19,7 @@ namespace XCWED2_SG1_21_22_2.Endpoint
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors();
 
             BLInitialization.InitBlServices(services);
         }
@@ -37,6 +38,8 @@ namespace XCWED2_SG1_21_22_2.Endpoint
             {
                 endpoints.MapControllers();
             });
+
+            app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin => true).AllowCredentials());
         }
     }
 }
