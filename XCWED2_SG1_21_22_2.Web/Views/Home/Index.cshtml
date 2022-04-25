@@ -7,8 +7,8 @@
 
     <div id="boardgame-handler-app">
         <div class="button-container pb-3" style="text-align:center">
-            <button class="btn btn-secondary" v-on:click="loadBoardGames">Load</button>
-            <button class="btn btn-success" v-on:click="createBoardGame">Create</button>
+            <button v-if="!enabledBackToList" class="btn btn-secondary" v-on:click="loadBoardGames">Load</button>
+            <button v-if="!enabledBackToList" class="btn btn-success" v-on:click="createBoardGame">Create</button>
             <button v-if="enabledBackToList" class="btn btn-secondary" v-on:click="backToList">Back to List</button>
         </div>
         <div id="content" style="display: flex; justify-content: center; flex-wrap: wrap;">
@@ -35,27 +35,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="boardGame in boardGames">
-                            <td>{{boardGame.id}}</td>
-                            <td>{{boardGame.name}}</td>
-                            <td>{{boardGame.minPlayer}}</td>
-                            <td>{{boardGame.maxPlayer}}</td>
-                            <td>{{boardGame.minAge}}</td>
-                            <td>{{boardGame.rating}}</td>
-                            <td>{{boardGame.priceHUF}}</td>
-                            <td>{{boardGame.designerID}}</td>
-                            <td>{{boardGame.publisherID}}</td>
+                        <tr v-for="boardgame in boardgames">
+                            <td>{{boardgame.id}}</td>
+                            <td>{{boardgame.name}}</td>
+                            <td>{{boardgame.minPlayer}}</td>
+                            <td>{{boardgame.maxPlayer}}</td>
+                            <td>{{boardgame.minAge}}</td>
+                            <td>{{boardgame.rating}}</td>
+                            <td>{{boardgame.priceHUF}}</td>
+                            <td>{{boardgame.designerID}}</td>
+                            <td>{{boardgame.publisherID}}</td>
                             <td style="width:20%;text-align:right;">
-                                <button class="btn btn-info" v-on:click="viewBoardGame(boardGame)">View</button>
-                                <button class="btn btn-warning" v-on:click="editBoardGame(boardGame)">Edit</button>
-                                <button class="btn btn-danger" v-on:click="editBoardGame(boardGame)">Delete</button>
+                                <button class="btn btn-info" v-on:click="viewBoardGame(boardgame)">View</button>
+                                <button class="btn btn-warning" v-on:click="editBoardGame(boardgame)">Edit</button>
+                                <button class="btn btn-danger" v-on:click="deleteBoardGame(boardgame)">Delete</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </template>
             <template v-else-if="operationMode == 1">
-                <view-component v-bind:boardGame="selectedBoardGame"></view-component>
+                <view-component v-bind:boardgame="selectedBoardGame"></view-component>
             </template>
             <template v-else-if="operationMode == 2">
                 <!--Create-->
@@ -64,9 +64,9 @@
             </template>
             <template v-else>
                 <!--Modify-->
-                <editor-component v-bind:boardGame="selectedBoardGame"
+                <editor-component v-bind:boardgame="selectedBoardGame"
                                   v-on:saved="savedSuccessfully"
-                                   v-on:cancelled="operationCancelled"></editor-component>
+                                  v-on:cancelled="operationCancelled"></editor-component>
             </template>
         </div>
     </div>
@@ -79,11 +79,17 @@
     const axi = axios.create({
         baseURL: 'http://localhost:48914/api/BoardGame'
     });
+    const axi_publisher = axios.create({
+        baseURL: 'http://localhost:48914/api/Publisher'
+    });
+    const axi_designer = axios.create({
+        baseURL: 'http://localhost:48914/api/Designer'
+    });
 
     var boardgGameHandlerApp = new Vue({
         el: '#boardgame-handler-app',
         data: {
-            boardGames: [],
+            boardgames: [],
             selectedBoardGame: {},
             operationMode: 0, //0-listing, 1-view, 2-create, 3-modify
             messages: [],
@@ -97,38 +103,240 @@
         methods: {
             loadBoardGames() {
                 axi.get('GetAll').then((response) => {
-                    this.boardGames = response.data;
+                    this.boardgames = response.data;
                     console.log(response.data);
                 }).catch((err) => {
                     console.log(err);
                 });
             },
-            viewBoardGame: function (car) {
-                this.selectedBoardGame = boardGame;
+            viewBoardGame: function (boardgame) {
+                this.selectedBoardGame = boardgame;
                 this.operationMode = 1;
             },
-            editBoardGame: function (car) {
-                this.selectedBoardGame = boardGame;
+            createBoardGame: function () {
+                this.operationMode = 2;
+            },
+            editBoardGame: function (boardgame) {
+                this.selectedBoardGame = boardgame;
                 this.operationMode = 3
             },
-            deleteBoardGame: function (car) {
-                axi.delete('Delete/' + boardGame.id).then((response) => {
+            deleteBoardGame: function (boardgame) {
+                axi.delete('Delete/' + boardgame.id).then((response) => {
                     if (response.data.isSuccess) {
                         this.messages.push("BoardGame deleted successfully")
                         this.loadBoardGames();
 
                         setTimeout(() => { this.messages = []; }, 3000);
-            }
-            else {
-
-            }
-                })
+                    }
+                    else {
+                        this.errors = response.data.messages('Error occured during delete.');
+                        setTimeout(() => { this.messages = []; }, 3000);
+                    }
+                }).catch((err) => {
+                    this.errors.push('Error occured during delete.');
+                    setTimeout(() => { this.messages = []; }, 3000);
+                });
             },
-            createBoardGame: function () {
-                this.operationMode = 2;
+            backToList: function () {
+                this.selectedBoardGame = {};
+                this.operationMode = 0;
+            },
+            savedSuccessfully(msg) {
+                this.backToList();
+                this.messages.push(msg);
+                console.log("saved");
+                this.loadBoardGames();
+                setTimeout(() => { this.messages = []; }, 3000);
+            },
+            operationCancelled() {
+                this.backToList();
+                this.messages.push("The operation has been cancelled.");
+                console.warn("cancelled");
+                setTimeout(() => { this.messages = []; }, 3000);
             }
         }
-    })
+    });
 
+    Vue.component('view-component', {
+        props: ['boardgame'],
+        template: '#view-template'
+    });
 
+    Vue.component('editor-component', {
+        props: ['boardgame'],
+        template: '#editor-template',
+        data: function () {
+            return {
+                innerBoardGame: {},
+                publishers: [],
+                designers: [],
+                isEdit: false,
+                errors: []
+            };
+        },
+        methods: {
+            save() {
+                if (this.isEdit) {
+                    axi.put('Update', this.innerBoardGame).then(this.handleSuccess).catch((err) => {
+                        console.log(err);
+                        this.handleError(['Error occured during processing.']);
+                    });
+                }
+                else {
+                    axi.post('Create', this.innerBoardGame).then(this.handleSuccess).catch((err) => {
+                        console.log(err);
+                        this.handleError(['Error occured during processing.']);
+                    });
+                }
+            },
+            cancel() {
+                this.$emit('cancelled');
+            },
+            handleSuccess(response) {
+                if (response.data.isSuccess) {
+                    this.$emit('saved', this.isEdit ? "BoardGame edited successfully" : "BoardGame created successfully");
+                } else {
+                    this.handleError(response.data.messages);
+                }
+            },
+            handleError(errorMessages) {
+                this.errors = errorMessages;
+
+                setTimeout(() => { this.errors = []; }, 3000); // Auto error clean after 3sec
+            }
+        },
+        created: function () {
+            if (this.boardgame != undefined) {
+                this.isEdit = true;
+
+                //Copy
+                this.innerBoardGame = {
+                    id: this.boardgame.id,
+                    name: this.boardgame.name,
+                    minPlayer: this.boardgame.minPlayer,
+                    maxPlayer: this.boardgame.maxPlayer,
+                    minAge: this.boardgame.minAge,
+                    rating: this.boardgame.rating,
+                    priceHUF: this.boardgame.priceHUF,
+                    designerID: this.boardgame.designerID,
+                    publisherID: this.boardgame.publisherID
+                };
+            } else {
+                // Create new
+                this.innerBoardGame = {
+                    id: 0,
+                    name: '',
+                    minPlayer: 0,
+                    maxPlayer: 0,
+                    minAge: 0,
+                    rating: 0,
+                    priceHUF: 0,
+                    designerID: 0,
+                    publisherID: 0
+                };
+            }
+
+            axi_publisher.get("GetAll").then((response) => {
+                this.publishers = response.data;
+            }).catch((err) => {
+                console.log(err);
+            });
+
+            axi_designer.get("GetAll").then((response) => {
+                this.designers = response.data;
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+    });
 </script>
+
+<script type="text/x-template" id="view-template">
+    <div style="text-align:left" class="boardgame-view-container">
+        <div>
+            <strong>Id</strong><br />
+            <label>{{ boardgame.id }}</label>
+        </div>
+        <div>
+            <strong>Name</strong><br />
+            <label>{{ boardgame.name }}</label>
+        </div>
+        <div>
+            <strong>MinPlayer</strong><br />
+            <label>{{ boardgame.minPlayer }}</label>
+        </div>
+        <div>
+            <strong>MaxPlayer</strong><br />
+            <label>{{ boardgame.maxPlayer }}</label>
+        </div>
+        <div>
+            <strong>MinAge</strong><br />
+            <label>{{ boardgame.minAge }}</label>
+        </div>
+        <div>
+            <strong>Rating</strong><br />
+            <label>{{ boardgame.rating }}</label>
+        </div>
+        <div>
+            <strong>Price</strong><br />
+            <label>{{ boardgame.priceHUF }}</label>
+        </div>
+        <div>
+            <strong>DesignerID</strong><br />
+            <label>{{ boardgame.designerID }}</label>
+        </div>
+        <div>
+            <strong>PublisherID</strong><br />
+            <label>{{ boardgame.publisherID }}</label>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-template" id="editor-template">
+    <div style="text-align:left" class="boardgame-view-container">
+        <div v-if="errors.length > 0">
+            <span v-for="msg in errors" style="color:red;font-weight:bold;">{{ msg }}</span>
+        </div>
+        <div>
+            <strong>Publisher</strong><br />
+            <select id="publisher-selector" v-model="innerBoardGame.publisherID" class="form-control">
+                <option v-for="publisher in publishers" v-bind:value="publisher.id">{{ publisher.name }}</option>
+            </select>
+        </div>
+        <div>
+            <strong>Designer</strong><br />
+            <select id="designer-selector" v-model="innerBoardGame.designerID" class="form-control">
+                <option v-for="designer in designers" v-bind:value="designer.id">{{ designer.name }}</option>
+            </select>
+        </div>
+        <div>
+            <strong>Name</strong><br />
+            <input type="text" v-model="innerBoardGame.name" class="form-control" />
+        </div>
+        <div>
+            <strong>MinPlayer</strong><br />
+            <input type="number" v-model.number="innerBoardGame.minPlayer" class="form-control" />
+        </div>
+        <div>
+            <strong>MaxPlayer</strong><br />
+            <input type="number" v-model.number="innerBoardGame.maxPlayer" class="form-control" />
+        </div>
+        <div>
+            <strong>MinAge</strong><br />
+            <input type="number" v-model.number="innerBoardGame.minAge" class="form-control" />
+        </div>
+        <div>
+            <strong>Rating</strong><br />
+            <input type="number" v-model.number="innerBoardGame.rating" class="form-control" />
+        </div>
+        <div>
+            <strong>Price</strong><br />
+            <input type="number" v-model.number="innerBoardGame.priceHUF" class="form-control" />
+        </div>
+        <div class="float-right pt-3">
+            <button class="btn btn-primary" v-on:click="save">Save</button>
+            <button class="btn btn-secondary" v-on:click="cancel">Cancel</button>
+        </div>
+    </div>
+</script>
+
