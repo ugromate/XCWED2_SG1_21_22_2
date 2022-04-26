@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using XCWED2_SG1_21_22_2.Logic.Interfaces;
+using XCWED2_SG1_21_22_2.Models.DTOs;
 using XCWED2_SG1_21_22_2.Models.Entities;
 using XCWED2_SG1_21_22_2.Models.Models;
 
@@ -40,17 +41,29 @@ namespace XCWED2_SG1_21_22_2.Endpoint.Controllers
         // POST api/BoardGame/Create
         [HttpPost]
         [ActionName("Create")]
-        public ApiResult Post(BoardGame boardgame)
+        public ApiResult Post(BoardGameDTO boardgame)
         {
             var result = new ApiResult(true);
 
             try
             {
-                boardGameLogic.Create(boardgame);
+                boardGameLogic.Create(new BoardGame()
+                {
+                    Id = boardgame.Id,
+                    PublisherID = boardgame.PublisherID,
+                    DesignerID = boardgame.DesignerID,
+                    Name = boardgame.Name,
+                    MinPlayer = boardgame.MinPlayer,
+                    MaxPlayer = boardgame.MaxPlayer,
+                    MinAge = boardgame.MinAge,
+                    Rating = boardgame.Rating,
+                    PriceHUF = boardgame.PriceHUF
+                });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 result.IsSuccess = false;
+                result.Messages = new List<string>() { ex.Message };
             }
 
             return result;
@@ -59,20 +72,31 @@ namespace XCWED2_SG1_21_22_2.Endpoint.Controllers
         // PUT api/BoardGame/Update
         [HttpPut]
         [ActionName("Update")]
-        public ApiResult Put(BoardGame boardgame)
+        public ApiResult Put(BoardGameDTO boardgame)
         {
             var result = new ApiResult(true);
 
             try
             {
-                boardGameLogic.Update(boardgame);
+                boardGameLogic.Update(new BoardGame()
+                {
+                    Id = boardgame.Id,
+                    PublisherID = boardgame.PublisherID,
+                    DesignerID = boardgame.DesignerID,
+                    Name = boardgame.Name,
+                    MinPlayer = boardgame.MinPlayer,
+                    MaxPlayer = boardgame.MaxPlayer,
+                    MinAge = boardgame.MinAge,
+                    Rating = boardgame.Rating,
+                    PriceHUF = boardgame.PriceHUF
+                });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 result.IsSuccess = false;
+                result.Messages = new List<string>() { ex.Message };
             }
-
-            return result;
+                return result;
         }
 
         // DELETE api/BoardGame/Delete/5
@@ -85,9 +109,10 @@ namespace XCWED2_SG1_21_22_2.Endpoint.Controllers
             {
                 boardGameLogic.Delete(id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 result.IsSuccess = false;
+                result.Messages = new List<string>() { ex.Message };
             }
 
             return result;

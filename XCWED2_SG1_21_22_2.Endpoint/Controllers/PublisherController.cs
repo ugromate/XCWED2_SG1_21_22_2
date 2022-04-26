@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using XCWED2_SG1_21_22_2.Logic.Interfaces;
+using XCWED2_SG1_21_22_2.Models.DTOs;
 using XCWED2_SG1_21_22_2.Models.Entities;
 using XCWED2_SG1_21_22_2.Models.Models;
 
@@ -39,17 +40,23 @@ namespace XCWED2_SG1_21_22_2.Endpoint.Controllers
         // POST api/Publisher/Create
         [HttpPost]
         [ActionName("Create")]
-        public ApiResult Post(Publisher Publisher)
+        public ApiResult Post(PublisherDTO publisher)
         {
             var result = new ApiResult(true);
 
             try
             {
-                publisherLogic.Create(Publisher);
+                publisherLogic.Create(new Publisher()
+                {
+                    Id = publisher.Id,
+                    Name = publisher.Name,
+                    Country = publisher.Country
+                });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 result.IsSuccess = false;
+                result.Messages = new List<string>() { ex.Message };
             }
 
             return result;
@@ -58,17 +65,23 @@ namespace XCWED2_SG1_21_22_2.Endpoint.Controllers
         // PUT api/Publisher/Update
         [HttpPut]
         [ActionName("Update")]
-        public ApiResult Put(Publisher Publisher)
+        public ApiResult Put(PublisherDTO publisher)
         {
             var result = new ApiResult(true);
 
             try
             {
-                publisherLogic.Update(Publisher);
+                publisherLogic.Update(new Publisher()
+                {
+                    Id = publisher.Id,
+                    Name = publisher.Name,
+                    Country = publisher.Country
+                });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 result.IsSuccess = false;
+                result.Messages = new List<string>() { ex.Message };
             }
 
             return result;

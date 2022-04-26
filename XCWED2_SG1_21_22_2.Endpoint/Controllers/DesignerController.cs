@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using XCWED2_SG1_21_22_2.Logic.Interfaces;
+using XCWED2_SG1_21_22_2.Models.DTOs;
 using XCWED2_SG1_21_22_2.Models.Entities;
 using XCWED2_SG1_21_22_2.Models.Models;
 
@@ -39,17 +40,23 @@ namespace XCWED2_SG1_21_22_2.Endpoint.Controllers
         // POST api/Designer/Create
         [HttpPost]
         [ActionName("Create")]
-        public ApiResult Post(Designer designer)
+        public ApiResult Post(DesignerDTO designer)
         {
             var result = new ApiResult(true);
 
             try
             {
-                designerLogic.Create(designer);
+                designerLogic.Create(new Designer()
+                {
+                    Id = designer.Id,
+                    Name = designer.Name,
+                    Nationality = designer.Nationality
+                });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 result.IsSuccess = false;
+                result.Messages = new List<string>() { ex.Message };
             }
 
             return result;
@@ -58,17 +65,23 @@ namespace XCWED2_SG1_21_22_2.Endpoint.Controllers
         // PUT api/Designer/Update
         [HttpPut]
         [ActionName("Update")]
-        public ApiResult Put(Designer designer)
+        public ApiResult Put(DesignerDTO designer)
         {
             var result = new ApiResult(true);
 
             try
             {
-                designerLogic.Update(designer);
+                designerLogic.Update(new Designer()
+                {
+                    Id = designer.Id,
+                    Name = designer.Name,
+                    Nationality = designer.Nationality
+                });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 result.IsSuccess = false;
+                result.Messages = new List<string>() { ex.Message };
             }
 
             return result;

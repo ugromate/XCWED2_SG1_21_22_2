@@ -179,7 +179,14 @@ namespace XCWED2_SG1_21_22_2.WpfClient.BL.Implementation
 
         public void ViewBoardGame(BoardGameModel boardGame)
         {
+            if (boardGame == null)
+            {
+                SendMessage("Please select a boardgame");
+                return;
+            }
+
             displayService.Display(boardGame);
+
         }
 
         private void RefreshCollectionFromServer(IList<BoardGameModel> collection)

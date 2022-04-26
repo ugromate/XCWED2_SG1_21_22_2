@@ -24,9 +24,49 @@ namespace XCWED2_SG1_21_22_2.Logic.Services
         public BoardGame Create(BoardGame entity)
         {
 
-            if (entity == null)
+            //if (entity == null)
+            //{
+            //    throw new Exception();
+            //}
+
+            if (entity.DesignerID == 0)
             {
-                throw new Exception();
+                throw new ApplicationException("Please choose Designer ID");
+            }
+
+            if (entity.PublisherID == 0)
+            {
+                throw new ApplicationException("Please choose Publisher ID");
+            }
+
+            if (String.IsNullOrWhiteSpace(entity.Name))
+            {
+                throw new ApplicationException("Name is required!");
+            }
+
+            if (entity.PriceHUF < 0)
+            {
+                throw new ApplicationException("Price must be greater or equal to 0!");
+            }  
+
+            if (entity.MinAge < 0)
+            {
+                throw new ApplicationException("Minimum age must be greater or equal to 0!");
+            }       
+            
+            if (entity.MinPlayer < 1)
+            {
+                throw new ApplicationException("Minimum player must be greater or equal to 1!");
+            }  
+            
+            if (entity.MaxPlayer < entity.MinPlayer)
+            {
+                throw new ApplicationException("Maximum player must be greater or equal to minimum player!");
+            }
+
+            if (entity.Rating < 0)
+            {
+                throw new ApplicationException("Rating must be greater or equal to 0!");
             }
 
             var result = _boardGameRepository.Create(entity);
@@ -46,9 +86,49 @@ namespace XCWED2_SG1_21_22_2.Logic.Services
         public BoardGame Update(BoardGame entity)
         {
 
-            if (entity == null)
+            //if (entity == null)
+            //{
+            //    throw new Exception();
+            //}
+
+            if (entity.DesignerID == 0)
             {
-                throw new Exception();
+                throw new ApplicationException("Please choose Designer ID");
+            }
+
+            if (entity.PublisherID == 0)
+            {
+                throw new ApplicationException("Please choose Publisher ID");
+            }
+
+            if (String.IsNullOrWhiteSpace(entity.Name))
+            {
+                throw new ApplicationException("Name is required!");
+            }
+
+            if (entity.PriceHUF < 0)
+            {
+                throw new ApplicationException("Price must be greater or equal to 0!");
+            }
+
+            if (entity.MinAge < 0)
+            {
+                throw new ApplicationException("Minimum age must be greater or equal to 0!");
+            }
+
+            if (entity.MinPlayer < 1)
+            {
+                throw new ApplicationException("Minimum player must be greater or equal to 1!");
+            }
+
+            if (entity.MaxPlayer < entity.MinPlayer)
+            {
+                throw new ApplicationException("Maximum player must be greater or equal to minimum player!");
+            }
+
+            if (entity.Rating < 0)
+            {
+                throw new ApplicationException("Rating must be greater or equal to 0!");
             }
 
             var result = _boardGameRepository.Update(entity);
