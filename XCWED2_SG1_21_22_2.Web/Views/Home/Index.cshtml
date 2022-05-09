@@ -139,6 +139,8 @@
             },
             backToList: function () {
                 this.selectedBoardGame = {};
+                this.messages.push("The operation has been cancelled.");
+                setTimeout(() => { this.messages = []; }, 3000);
                 this.operationMode = 0;
             },
             savedSuccessfully(msg) {
